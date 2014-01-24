@@ -1,0 +1,10 @@
+
+<div class="container maincontent">
+  <ol>
+    <% @links.each do |link| %>
+      <li>
+        <%= link_to("#{link.title}", link.link_url) %>
+     </li>
+    <% end %>
+  </ol>
+</div>

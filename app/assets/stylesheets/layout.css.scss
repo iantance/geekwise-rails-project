@@ -1,0 +1,110 @@
+// Mixins
+// ====================================
+
+@mixin clearfix {
+ // For modern browsers
+  &:before, &:after {
+    content: "";
+    display: table;
+  }
+
+  &:after {
+    clear: both;
+  }
+
+  // For IE 6/7 (trigger hasLayout)
+  & {
+    zoom: 1;
+  }
+}
+
+*{
+  box-sizing:border-box;
+}
+
+body{
+  padding: 95px 20px 40px 20px;
+  background-color: #7a1501;
+}
+
+.container{
+  width:85%;
+  margin-right: auto;
+  margin-left: auto;
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+
+/*Nav bar styles*/
+
+nav{
+  height: 95px;
+  background-color: #fff;
+  position: fixed;
+  top:0px;
+  left:0px;
+  width: 100%;
+  @include clearfix;
+}
+
+nav ul li{
+  float: left;
+  padding: 10px 15px;
+}
+
+nav ul li:hover{
+  background-color: #7a1501;
+}
+
+nav ul li:hover a{
+  color:#f9da0c;
+}
+
+nav ul li a{
+  display:block;
+  padding-top: 15px;
+  padding-bottom: 15px;
+  font-size: 20px;
+  line-height: 45px;
+  color:#000;
+  text-decoration: none;
+}
+
+nav ul li a img{
+  vertical-align: middle;
+}
+nav ul li.logo, nav ul li a.logo{
+  background-color: #fff;
+  padding-top: 5px;
+  padding-bottom: 0px;
+  display: inline;
+}
+
+.navright{
+  float: right;
+}
+
+.navright li a{
+  font-size: 14px;
+}
+
+.maincontent{
+  border:1px solid #000;
+  border-radius: 5px;
+  background-color: #FDDBCE;
+}
+
+.maincontent ol{
+  list-style: decimal;
+  padding-left: 15px;
+}
+
+.maincontent ol li{
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.maincontent ol li a{
+  color:#000;
+}

@@ -7,7 +7,24 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-
+    <header>
+      <nav>
+          <ul>
+            <li class = "logo">
+              <a class= "logo" href = "http://geekwiseacademy.com/"><img src=<%= image_path("logo.png") %> alt = "Geekwise Academy"></a>
+            </li>
+            <li>
+              <%= link_to("Geekwise News", links_path) %>
+            </li>
+            <li>
+              <a href = "#">Newest</a>
+            </li>
+          </ul>
+          <ul class = "navright">
+            <li><a href = "login.html">login</a></li>
+          </ul>
+      </nav>
+    </header>
 <%= yield %>
 
 </body>
