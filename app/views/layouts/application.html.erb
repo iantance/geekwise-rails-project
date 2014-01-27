@@ -21,11 +21,21 @@
             </li>
           </ul>
           <ul class = "navright">
-            <li><a href = "login.html">login</a></li>
+            <li><%= link_to("Sign Up", new_user_path) %></li>
+            <li><%= link_to("Login", new_session_path) %></li>
           </ul>
       </nav>
     </header>
-<%= yield %>
+    <div class="container">
+      <% if flash[:notice] %>
+        <div class="flash notice"><%= flash[:notice] %></div>
+      <% end %>
+
+      <% if flash[:alert] %>
+        <div class="flash alert"><%= flash[:alert] %></div>
+      <% end %>
+      <%= yield %>
+    </div>
 
 </body>
 </html>

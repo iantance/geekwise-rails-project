@@ -1,0 +1,85 @@
+.formcontent {
+  width: 60%;
+  border:1px solid #000;
+  border-radius: 5px;
+  background-color: #FDDBCE;
+  padding-left: 15px;
+}
+
+form {
+  p {
+    font-size: 20px;
+    margin: 10px 10px 10px 5px;
+  }
+
+  input[type=submit] {
+    position: relative;
+    left:45%;
+  }
+}
+.form-group {
+  margin: 10px 0px 10px 25px;
+
+
+   label {
+    display: inline-block;
+    width: 14%;
+    text-align: right;
+    vertical-align: middle;
+  }
+
+   input {
+    width: 40%;
+    margin-left: 10px;
+    height: 30px;
+    border-radius: 5px;
+    border: 1px solid;
+  }
+  .field_with_errors{
+    display: inline;
+
+    label {
+      color: red;
+    }
+
+    input {
+      border: 1px solid red;
+    }
+  }
+
+}
+
+.validation-errors {
+  padding: 10px;
+  position: relative;
+  width: 60%;
+  margin: 2% 0% 2% 15%;
+  border: 1px solid black;
+  border-radius: 5px;
+  background-color: #fff;
+  color: red;
+
+  ul{
+    padding:5px;
+    list-style:none;
+  }
+}
+
+input[type=submit] {
+  font-size: 16px;
+  width: 120px;
+  height: 35px;
+  margin: 10px 0px 10px 0px;
+  border:1px solid #7a1501;
+  border-radius: 3px;
+  background: none;
+  color:#7a1501;
+  background-color: #f9da0c; 
+}
+
+input[type=submit]:hover, input[type=submit]:focus {
+  border:1px solid #f9da0c;
+  background-color: #7a1501;
+  color:#f9da0c;
+}
+
