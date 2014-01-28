@@ -56,4 +56,29 @@ class SessionsControllerTest < ActionController::TestCase
       end
     end
   end
+
+  context "DELETE #destroy" do
+    context "if user not logged in" do
+      setup do
+        delete :destroy
+      end
+      should "redirect to login" do
+        assert_redirected_to new_session_url
+      end
+    end
+    context "if user logged in" do
+      setup do
+        @user = Fabricate(:user)
+        login_as(@user)
+        delete :destroy
+      end
+      should "log out current user" do
+        assert_logged_out
+      end
+      should "redirect to statuses" do
+        assert_redirected_to links_url
+      end
+      
+    end
+  end
 end
