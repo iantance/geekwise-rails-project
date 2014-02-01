@@ -4,7 +4,8 @@
       <% @links.each do |link| %>
         <li>
           <%= link_to("#{link.title}", link.link_url) %>
-          <p class="link-details"><%= time_ago_in_words link.created_at %> ago</p>
+          <span class="domain">(<%= link_domain(link) %>)</span>
+          <p class="link-details">submitted by <%= link.user.name %> <%= time_ago_in_words link.created_at %> ago</p>
        </li>
       <% end %>
     </ol>

@@ -6,4 +6,11 @@ class LinkTest < ActiveSupport::TestCase
     link.link_url = "foo"
     assert link.invalid?
   end
+
+  should "provide title when title left blank" do
+    link = Fabricate.build(:link, :title => nil)
+    link.save
+    assert_not_nil link.title
+  end
+
 end

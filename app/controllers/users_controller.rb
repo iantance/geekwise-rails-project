@@ -1,4 +1,7 @@
 class UsersController < ApplicationController
+
+  before_action :authenticate_user!, :only => [:edit, :update]
+
   def new
     redirect_to links_url if logged_in?
     @user = User.new
@@ -15,6 +18,18 @@ class UsersController < ApplicationController
     end
   end
 
+  def edit
+    @user = current_user
+  end
+
+  def update
+    @user = current_user
+    if @user.update_attributes(user_params)
+      redirect_to edit_user_url, :notice => "Settings saved"
+    else
+      render "edit"
+    end
+  end
 
 private
 

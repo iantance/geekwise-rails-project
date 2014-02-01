@@ -1,6 +1,8 @@
 require 'bcrypt'
 
 class User < ActiveRecord::Base
+  has_many :links
+
   EMAIL_REGEX = /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/
   validates :name, :uniqueness => true, :length => 1..15
   validates :email, :uniqueness => true, :format => /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/
@@ -8,7 +10,7 @@ class User < ActiveRecord::Base
     :format => { :with => /\d/, :message => "must have at least one number" },
     :confirmation => true,
     :if => :password_validatible?
-  validates :password_confirmation, :presence => true
+  validates :password_confirmation, :presence => true, :if => :sign_up?
 
   attr_accessor :password
 
@@ -25,6 +27,10 @@ private
 
   def password_validatible?
     password.present? || new_record?
+  end
+
+  def sign_up?
+    new_record?
   end
 
   def encrypt_password

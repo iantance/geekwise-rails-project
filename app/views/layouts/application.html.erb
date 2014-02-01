@@ -23,6 +23,8 @@
           <ul class = "navright">
             <% if logged_in? %>
               <li class = "welcome" ><span>Signed in as: <%= current_user.name %></span></li>
+              <li><%= link_to("Submit Link", new_link_path) %></li>
+              <li><%= link_to("Settings", edit_user_path)%></li>
               <li><%= link_to("Logout", session_path, :method => :delete) %></li>
             <% else %>
               <li><%= link_to("Sign Up", new_user_path) %></li>
