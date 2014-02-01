@@ -1,7 +1,10 @@
 Geekwisenews::Application.routes.draw do
   resources :links
+  resources :comments
   resource :user
   resource :session, :only => [:new, :create, :destroy]
+
+  get ":name" => "users#show", :as => "profile"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

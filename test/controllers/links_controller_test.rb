@@ -1,6 +1,30 @@
 require 'test_helper'
 
 class LinksControllerTest < ActionController::TestCase
+
+  context "GET #show" do
+    context "if link exists" do
+      setup do
+        @user = Fabricate(:user)
+        @link = Fabricate(:link, :user_id => @user.id)
+        get :show, :id => @link.id
+      end
+      should render_template("show")
+      should "assign link" do
+        assert_equal @link, assigns(:link)
+      end
+    end  
+
+    context "if link does not exist" do
+      should "raise routing error" do
+        assert_raises ActionController::RoutingError do
+          get :show, :id => "-1"
+        end
+      end
+    end
+  end
+
+
   context "GET #index" do
     setup do
       get :index

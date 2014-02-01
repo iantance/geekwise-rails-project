@@ -1,0 +1,16 @@
+<div class = "maincontent">
+  <div class = "main-link">
+    <%= link_to("#{@link.title}", @link.link_url) %>
+    <span class="domain">(<%= link_domain(@link) %>)</span>
+    <p class="link-details">submitted by <%= link_to @link.user.name, profile_path(@link.user.name) %> <%= time_ago_in_words @link.created_at %> ago | <%= link_to "#{@link.comments.count} comments", link_path(@link.id) %></p>
+  </div>
+  <div class = "comment-form">
+    <h2>New Comment:</h2>
+    <%= form_for(@comment) do |f| %>
+      <div class="form-group">
+        <%= f.text_area :text, :rows => 10 %>
+      </div>
+      <%= f.submit "Submit"%>
+    <% end %>
+  </div>
+</div>

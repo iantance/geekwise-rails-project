@@ -2,6 +2,10 @@ class UsersController < ApplicationController
 
   before_action :authenticate_user!, :only => [:edit, :update]
 
+  def show
+    @user = User.find_by(:name => params[:name]) || not_found!
+  end
+
   def new
     redirect_to links_url if logged_in?
     @user = User.new

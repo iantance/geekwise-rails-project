@@ -2,6 +2,12 @@ class LinksController < ApplicationController
 
   before_action :authenticate_user!, :only => [:new, :create]
 
+  def show
+    @link = Link.find_by(params[:id]) || not_found!
+    @comment = @link.comments.new
+    session[:link_id] = @link.id
+  end
+
   def index
     @links = Link.all.order("created_at DESC")  
   end
