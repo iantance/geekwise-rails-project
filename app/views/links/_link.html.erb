@@ -1,0 +1,9 @@
+<%= link_to image_tag("glyphicons_213_up_arrow.png", :alt => "upvote", :class => "vote"), upvote_link_path(link.id), :method => :post  %>
+<%= link_to image_tag("glyphicons_212_down_arrow.png", :alt => "downvote", :class=> "vote"), downvote_link_path(link.id), :method => :post %>
+<%= link_to("#{link.title}", link.link_url) %>
+<span class="domain">(<%= link_domain(link) %>)</span>
+<p class="link-details">
+  <span class="up"><%= link.upvotes.size %> ups</span>
+  <span class="down"><%= link.downvotes.size %> downs</span>
+  | submitted by <%= link_to link.user.name, profile_path(link.user.name) %> <%= time_ago_in_words link.created_at %> ago | <%= link_to "#{link.comments.count} comments", link_path(link.id) %>
+</p>

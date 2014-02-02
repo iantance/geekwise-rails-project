@@ -1,6 +1,6 @@
 class LinksController < ApplicationController
 
-  before_action :authenticate_user!, :only => [:new, :create]
+  before_action :authenticate_user!, :only => [:new, :create, :upvote, :downvote]
 
   def show
     @link = Link.find_by(:id => params[:id]) || not_found!
@@ -26,6 +26,17 @@ class LinksController < ApplicationController
     end
   end
 
+  def upvote
+    @link = Link.find_by(:id => params[:id]) || not_found!
+    @link.liked_by current_user
+    redirect_to :back
+  end
+
+  def downvote
+    @link = Link.find_by(:id => params[:id]) || not_found!
+    @link.disliked_by current_user
+    redirect_to :back
+  end
 
 private
 

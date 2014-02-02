@@ -1,6 +1,9 @@
 require 'bcrypt'
+require 'acts_as_votable'
 
 class User < ActiveRecord::Base
+  acts_as_voter
+  
   has_many :links
   has_many :comments
   

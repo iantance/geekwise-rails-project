@@ -95,6 +95,86 @@ class LinksControllerTest < ActionController::TestCase
       end
     end
   end
+
+  context "POST #upvote" do
+    context "if user logged in" do
+      setup do
+        request.env['HTTP_REFERER'] = "request_origin"
+        @user = Fabricate(:user)
+        login_as(@user)
+        @link = Fabricate(:link)
+        post :upvote, :id => @link.id
+      end
+
+      context "link exits" do
+        should "register upvote on link from user" do
+          assert_equal 1, @link.upvotes.size
+          assert_equal 1, @user.votes.size
+        end
+        should "reload page" do
+          assert_redirected_to "request_origin"
+        end
+      end
+
+      context "link does not exist" do
+        should "raise routing error" do
+          assert_raises ActionController::RoutingError do
+            post :upvote, :id => "-1"
+          end
+        end
+      end
+    end
+
+    context "if user not logged in" do
+      setup do
+        @link = Fabricate(:link)
+        post :upvote, :id => @link.id
+      end
+      should "redirect to login" do
+        assert_redirected_to new_session_url
+      end
+    end
+  end
+  
+  context "POST #downvote" do
+    context "if user logged in" do
+      setup do
+        request.env['HTTP_REFERER'] = "request_origin"
+        @user = Fabricate(:user)
+        login_as(@user)
+        @link = Fabricate(:link)
+        post :downvote, :id => @link.id
+      end
+      
+      context "link exits" do
+        should "register upvote on link from user" do
+          assert_equal 1, @link.downvotes.size
+          assert_equal 1, @user.votes.size
+        end
+        should "reload page" do
+          assert_redirected_to "request_origin"
+        end
+      end
+
+      context "link does not exist" do
+        should "raise routing error" do
+          assert_raises ActionController::RoutingError do
+            post :downvote, :id => "-1"
+          end
+        end
+      end
+    end
+
+    context "if user not logged in" do
+      setup do
+        @link = Fabricate(:link)
+        post :downvote, :id => @link.id
+      end
+      should "redirect to login" do
+        assert_redirected_to new_session_url
+      end
+    end
+  end
 end
 
 

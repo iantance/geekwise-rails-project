@@ -1,5 +1,10 @@
 Geekwisenews::Application.routes.draw do
-  resources :links
+  resources :links do
+    member do
+      post 'upvote'
+      post 'downvote'
+    end
+  end
   resources :comments
   resource :user
   resource :session, :only => [:new, :create, :destroy]
