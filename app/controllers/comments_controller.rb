@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-  before_action :authenticate_user!, :only => [:create]
+  before_action :authenticate_user!, :only => [:create, :upvote, :downvote]
 
   def create
     @link = Link.find_by(:id => session[:link_id])
@@ -13,6 +13,18 @@ class CommentsController < ApplicationController
     else
       redirect_to link_url(@link.id)
     end
+  end
+
+  def upvote
+    @comment = Comment.find_by(:id => params[:id]) || not_found!
+    @comment.liked_by current_user
+    redirect_to :back
+  end
+
+  def downvote
+    @comment = Comment.find_by(:id => params[:id]) || not_found!
+    @comment.disliked_by current_user
+    redirect_to :back
   end
 
 private

@@ -5,7 +5,12 @@ Geekwisenews::Application.routes.draw do
       post 'downvote'
     end
   end
-  resources :comments
+  resources :comments do
+    member do
+      post 'upvote'
+      post 'downvote'
+    end
+  end
   resource :user
   resource :session, :only => [:new, :create, :destroy]
 

@@ -46,4 +46,95 @@ class CommentsControllerTest < ActionController::TestCase
       end
     end
   end
+
+  context "POST #upvote" do
+    context "if user logged in" do
+      setup do
+        request.env['HTTP_REFERER'] = "request_origin"
+        @user = Fabricate(:user)
+        login_as(@user)
+        @comment = Fabricate(:comment)
+        post :upvote, :id => @comment.id
+      end
+
+      context "comment exits" do
+        should "register upvote on link from user" do
+          assert_equal 1, @comment.upvotes.size
+          assert_equal 1, @user.votes.size
+        end
+        should "reload page" do
+          assert_redirected_to "request_origin"
+        end
+      end
+
+      context "comment does not exist" do
+        should "raise routing error" do
+          assert_raises ActionController::RoutingError do
+            post :upvote, :id => "-1"
+          end
+        end
+      end
+    end
+
+    context "if user not logged in" do
+      setup do
+        @comment = Fabricate(:link)
+        post :upvote, :id => @comment.id
+      end
+      should "redirect to login" do
+        assert_redirected_to new_session_url
+      end
+    end
+  end
+  
+  context "POST #downvote" do
+    context "if user logged in" do
+      setup do
+        request.env['HTTP_REFERER'] = "request_origin"
+        @user = Fabricate(:user)
+        login_as(@user)
+        @comment = Fabricate(:comment)
+        post :downvote, :id => @comment.id
+      end
+      
+      context "comment exits" do
+        should "register upvote on link from user" do
+          assert_equal 1, @comment.downvotes.size
+          assert_equal 1, @user.votes.size
+        end
+        should "reload page" do
+          assert_redirected_to "request_origin"
+        end
+      end
+
+      context "comment does not exist" do
+        should "raise routing error" do
+          assert_raises ActionController::RoutingError do
+            post :downvote, :id => "-1"
+          end
+        end
+      end
+    end
+
+    context "if user not logged in" do
+      setup do
+        @comment = Fabricate(:link)
+        post :downvote, :id => @comment.id
+      end
+      should "redirect to login" do
+        assert_redirected_to new_session_url
+      end
+    end
+  end
+
 end
+
+
+
+
+
+
+
+
+
+
