@@ -17,11 +17,10 @@ class CommentsControllerTest < ActionController::TestCase
         @user2 = Fabricate(:user)
         login_as(@user)
         @link = Fabricate(:link, :user_id => @user2.id)
-        session[:link_id] = @link.id
       end
       context "with valid input" do
         setup do
-          @comment_params = Fabricate.attributes_for(:comment)
+          @comment_params = Fabricate.attributes_for(:comment, :link_id => @link.id)
           post :create, :comment => @comment_params
         end
         should "save comment belonging to user" do
@@ -38,7 +37,8 @@ class CommentsControllerTest < ActionController::TestCase
 
       context "with invalid input" do
         setup do
-          post :create, :comment => { :text => "" }
+          @comment_params = Fabricate.attributes_for(:comment, :link_id => @link.id, :text => "")
+          post :create, :comment => @comment_params
         end
         should "redirect to link" do
           assert_redirected_to link_url(@link.id)

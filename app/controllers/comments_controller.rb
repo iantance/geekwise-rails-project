@@ -2,16 +2,16 @@ class CommentsController < ApplicationController
   before_action :authenticate_user!, :only => [:create, :upvote, :downvote]
 
   def create
-    @link = Link.find_by(:id => session[:link_id])
+    # @link = Link.find_by(:id => session[:link_id])
     @comment  = Comment.new(comment_params)
     @comment.user_id = current_user.id
-    @comment.link_id = @link.id
-    session.delete(:link_id)
+    # @comment.link_id = @link.id
+    # session.delete(:link_id)
 
     if @comment.save
-      redirect_to link_url(@link.id), :notice => "Comment added"
+      redirect_to link_url(@comment.link_id), :notice => "Comment added"
     else
-      redirect_to link_url(@link.id)
+      redirect_to link_url(@comment.link_id)
     end
   end
 
@@ -30,6 +30,6 @@ class CommentsController < ApplicationController
 private
 
   def comment_params
-    params.require(:comment).permit(:text)
+    params.require(:comment).permit(:text, :link_id)
   end
 end

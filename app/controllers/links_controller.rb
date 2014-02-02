@@ -4,8 +4,8 @@ class LinksController < ApplicationController
 
   def show
     @link = Link.find_by(:id => params[:id]) || not_found!
-    @comment = @link.comments.new
-    session[:link_id] = @link.id
+    @comment = @link.comments.new(:link_id => @link.id)
+    # session[:link_id] = @link.id
   end
 
   def index
