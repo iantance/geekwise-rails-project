@@ -40,7 +40,9 @@ class CommentsControllerTest < ActionController::TestCase
         setup do
           post :create, :comment => { :text => "" }
         end
-        should render_template("links/show")
+        should "redirect to link" do
+          assert_redirected_to link_url(@link.id)
+        end
       end
     end
   end

@@ -3,13 +3,15 @@ class CommentsController < ApplicationController
 
   def create
     @link = Link.find_by(:id => session[:link_id])
-    @comment  = current_user.comments.new(comment_params)
+    @comment  = Comment.new(comment_params)
+    @comment.user_id = current_user.id
     @comment.link_id = @link.id
+    session.delete(:link_id)
 
     if @comment.save
       redirect_to link_url(@link.id), :notice => "Comment added"
     else
-      render "links/show"
+      redirect_to link_url(@link.id)
     end
   end
 

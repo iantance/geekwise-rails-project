@@ -3,7 +3,7 @@ class LinksController < ApplicationController
   before_action :authenticate_user!, :only => [:new, :create]
 
   def show
-    @link = Link.find_by(params[:id]) || not_found!
+    @link = Link.find_by(:id => params[:id]) || not_found!
     @comment = @link.comments.new
     session[:link_id] = @link.id
   end

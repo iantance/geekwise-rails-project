@@ -13,4 +13,20 @@
       <%= f.submit "Submit"%>
     <% end %>
   </div>
+  <div class = "comment-list">
+    <ol>
+      <% @link.comments.each do |comment| %>
+        <% unless comment.user.blank? %>
+        <li>
+          <div class = "comment-details">
+            submitted by <%= link_to comment.user.name, profile_path(comment.user.name) %> <%= time_ago_in_words comment.created_at %> ago
+          </div>
+          <div class = "comment-main">
+            <%= comment.text %>
+          </div>
+        </li>
+        <% end %>
+      <% end %>
+    </ol>
+  </div>
 </div>
