@@ -18,12 +18,14 @@ class CommentsController < ApplicationController
   def upvote
     @comment = Comment.find_by(:id => params[:id]) || not_found!
     @comment.liked_by current_user
+    @comment.update_score
     redirect_to :back
   end
 
   def downvote
     @comment = Comment.find_by(:id => params[:id]) || not_found!
     @comment.disliked_by current_user
+    @comment.update_score
     redirect_to :back
   end
 
