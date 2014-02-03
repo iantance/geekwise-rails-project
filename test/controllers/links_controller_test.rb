@@ -37,6 +37,18 @@ class LinksControllerTest < ActionController::TestCase
     end
   end
 
+  context "GET #newest" do
+    setup do
+      get :newest
+    end
+
+    should respond_with(200)
+    should render_template("index")
+    should "assign value to links" do
+      assert_not_nil :links
+    end
+  end  
+
   context "GET #new" do
     context "if user logged in" do
       setup do
@@ -135,7 +147,7 @@ class LinksControllerTest < ActionController::TestCase
       end
     end
   end
-  
+
   context "POST #downvote" do
     context "if user logged in" do
       setup do

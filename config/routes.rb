@@ -4,6 +4,9 @@ Geekwisenews::Application.routes.draw do
       post 'upvote'
       post 'downvote'
     end
+    collection do
+      get 'newest'
+    end
   end
   resources :comments do
     member do

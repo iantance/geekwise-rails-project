@@ -9,7 +9,12 @@ class LinksController < ApplicationController
   end
 
   def index
-    @links = Link.all.order("created_at DESC")  
+    @links = Link.all.order("score DESC")
+  end
+
+  def newest
+    @links = Link.all.order("created_at DESC")
+    render "index"
   end
   
   def new
@@ -29,12 +34,14 @@ class LinksController < ApplicationController
   def upvote
     @link = Link.find_by(:id => params[:id]) || not_found!
     @link.liked_by current_user
+    @link.update_score
     redirect_to :back
   end
 
   def downvote
     @link = Link.find_by(:id => params[:id]) || not_found!
     @link.disliked_by current_user
+    @link.update_score
     redirect_to :back
   end
 
