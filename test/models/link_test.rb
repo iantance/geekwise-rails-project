@@ -13,4 +13,9 @@ class LinkTest < ActiveSupport::TestCase
     assert_not_nil link.title
   end
 
+  should "provide default score" do
+    link = Fabricate(:link, :score => nil)
+    assert_not_nil link.score
+  end
+
 end

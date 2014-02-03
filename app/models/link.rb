@@ -16,15 +16,7 @@ class Link < ActiveRecord::Base
 
   def update_score
     s =(self.upvotes.size - self.downvotes.size)
-    if s > 0 
-      sign = 1
-    else
-      if s < 0
-        sign = -1
-      else
-        sign = 0
-      end
-    end
+    sign = s <=> 0  
     order = Math.log10([0, s.abs].max)
     seconds = created_at.to_i - 1134028003
     score = order + sign * seconds/45000
