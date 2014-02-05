@@ -1,0 +1,10 @@
+<div class= "profile-content">
+  <h3>User: <%= user.name %></h3>
+  <h3>Created: <%= time_ago_in_words user.created_at %></h3>
+  <%= link_to profile_path(user.name) do %>
+    <h3>Links: <%= user.links.count %></h3>
+  <% end %>
+  <%= link_to user_comments_path(user.name) do %>
+    <h3>Comments: <%= user.comments.count %></h3>
+  <% end %>
+</div>

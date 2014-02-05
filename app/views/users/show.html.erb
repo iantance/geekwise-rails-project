@@ -1,9 +1,4 @@
-<div class= "profile-content">
-  <h3>User: <%= @user.name %></h3>
-  <h3>Created: <%= time_ago_in_words @user.created_at %></h3>
-  <h3>Links: <%= @user.links.count %></h3>
-  <h3>Comments: <%= @user.comments.count %></h3>
-</div>
+<%= render "profile", :user => @user %>
 <%= render "links/list", :links => @user.links %>
 
  

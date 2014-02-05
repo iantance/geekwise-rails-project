@@ -6,6 +6,10 @@ class UsersController < ApplicationController
     @user = User.find_by(:name => params[:name]) || not_found!
   end
 
+  def comments
+    @user = User.find_by(:name => params[:name]) || not_found!
+  end
+
   def new
     redirect_to links_url if logged_in?
     @user = User.new
