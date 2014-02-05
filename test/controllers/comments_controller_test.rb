@@ -1,6 +1,30 @@
 require 'test_helper'
 
 class CommentsControllerTest < ActionController::TestCase
+  context "GET #show" do
+    context "parent comment exists" do
+      setup do
+        @user = Fabricate(:user)
+        @link = Fabricate(:link, :user_id => @user.id)
+        @comment = Fabricate(:comment, :link_id => @link.id, :user_id => @user.id)
+        get :show, :id => @comment.id
+      end
+      should render_template("show")
+      should "assign comment" do
+        assert_equal @comment, assigns(:comment)
+      end
+    end
+    context "if comment does not exist" do
+      should "raise routing error" do
+        assert_raises ActionController::RoutingError do
+          get :show, :id => "-1"
+        end
+      end
+    end
+  end
+
+
+
   context "POST #create" do
     context "if user not signed in" do
       setup do
@@ -18,30 +42,63 @@ class CommentsControllerTest < ActionController::TestCase
         login_as(@user)
         @link = Fabricate(:link, :user_id => @user2.id)
       end
-      context "with valid input" do
-        setup do
-          @comment_params = Fabricate.attributes_for(:comment, :link_id => @link.id)
-          post :create, :comment => @comment_params
+      context "first commment on a link" do
+        context "with valid input" do
+          setup do
+            @comment_params = Fabricate.attributes_for(:comment, :link_id => @link.id)
+            post :create, :comment => @comment_params
+          end
+          should "save comment belonging to user" do
+            assert @user.comments.any?
+          end
+          should "save comment belonging to link" do
+            assert @link.comments.any?
+          end
+          should "redirect to link with a flash" do
+            assert_not_nil flash[:notice]
+            assert_redirected_to link_url(@link.id)
+          end
         end
-        should "save comment belonging to user" do
-          assert @user.comments.any?
-        end
-        should "save comment belonging to link" do
-          assert @link.comments.any?
-        end
-        should "redirect to link with a flash" do
-          assert_not_nil flash[:notice]
-          assert_redirected_to link_url(@link.id)
+
+        context "with invalid input" do
+          setup do
+            @comment_params = Fabricate.attributes_for(:comment, :link_id => @link.id, :text => "")
+            post :create, :comment => @comment_params
+          end
+          should "redirect to link" do
+            assert_redirected_to link_url(@link.id)
+          end
         end
       end
 
-      context "with invalid input" do
+      context "new nested comment" do
         setup do
-          @comment_params = Fabricate.attributes_for(:comment, :link_id => @link.id, :text => "")
-          post :create, :comment => @comment_params
+          @parent_comment = Fabricate(:comment, :link_id => @link.id)
         end
-        should "redirect to link" do
-          assert_redirected_to link_url(@link.id)
+        context "with valid input" do
+          setup do
+            @comment_params = Fabricate.attributes_for(:comment, :link_id => @link.id, :parent_id => @parent_comment.id)
+            post :create, :comment => @comment_params 
+          end
+          should "save comment belonging to user" do
+            assert @user.comments.any?
+          end
+          should "save comment belonging to link" do
+            assert @parent_comment.has_children?
+          end
+          should "redirect to comment with a flash" do
+            assert_not_nil flash[:notice]
+            assert_redirected_to comment_url(@parent_comment.id)
+          end
+        end
+        context "with invalid input" do
+          setup do
+            @comment_params = Fabricate.attributes_for(:comment, :link_id => @link.id, :parent_id => @parent_comment.id, :text => "")
+            post :create, :comment => @comment_params 
+          end
+          should "redirect to parent commment" do
+            assert_redirected_to comment_url(@parent_comment.id)
+          end
         end
       end
     end

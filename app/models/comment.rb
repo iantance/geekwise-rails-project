@@ -1,10 +1,11 @@
 require 'acts_as_votable'
+require 'ancestry'
 
 class Comment < ActiveRecord::Base
   acts_as_votable
-
   belongs_to :user
   belongs_to :link
+  has_ancestry
   validates :text, :presence => true
 
   default_scope -> { order('score DESC') }

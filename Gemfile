@@ -29,6 +29,8 @@ gem 'jbuilder', '~> 1.2'
 
 gem 'acts_as_votable', '~> 0.8.0'
 
+gem 'ancestry'
+
 group :doc do
   # bundle exec rake doc:rails generates the API under doc/api.
   gem 'sdoc', require: false

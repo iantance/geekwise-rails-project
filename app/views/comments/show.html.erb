@@ -1,0 +1,7 @@
+<div class = "maincontent">
+  <div class = "main-link">
+    <%= render "comment", :comment => @comment %>
+  </div>
+  <%= render "form", :comment => @new_nested_comment %>
+  <%= render "comments/list", :comments => @comment.children %>
+</div>

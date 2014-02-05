@@ -2,34 +2,6 @@
   <div class = "main-link">
     <%= render "link", :link => @link %>
   </div>
-  <div class = "comment-form">
-    <h2>New Comment:</h2>
-    <%= form_for(@comment) do |f| %>
-      <%= f.hidden_field :link_id %>
-      <div class="form-group">
-        <%= f.text_area :text, :rows => 10 %>
-      </div>
-      <%= f.submit "Submit"%>
-    <% end %>
-  </div>
-  <div class = "comment-list">
-    <ol>
-      <% @link.comments.each do |comment| %>
-        <% unless comment.user.blank? %>
-        <li>
-          <%= link_to image_tag("glyphicons_213_up_arrow.png", :alt => "upvote", :class => "vote"), upvote_comment_path(comment.id), :method => :post  %>
-          <%= link_to image_tag("glyphicons_212_down_arrow.png", :alt => "downvote", :class=> "vote"), downvote_comment_path(comment.id), :method => :post %>
-            <span class="up"><%= comment.upvotes.size %> ups</span>
-            <span class="down"><%= comment.downvotes.size %> downs</span>
-          <span class = "comment-details">
-            | submitted by <%= link_to comment.user.name, profile_path(comment.user.name) %> <%= time_ago_in_words comment.created_at %> ago
-          </span>
-          <div class = "comment-main">
-            <%= comment.text %>
-          </div>
-        </li>
-        <% end %>
-      <% end %>
-    </ol>
-  </div>
+  <%= render "comments/form", :comment => @comment %>
+  <%= render "comments/list", :comments => @link.comments %>
 </div>
