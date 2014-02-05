@@ -48,4 +48,16 @@ class UserTest < ActiveSupport::TestCase
       assert_equal @user, User.authenticate(@user.email, @user.password)
     end
   end
+
+
 end
+
+
+
+
+
+
+
+
+
+

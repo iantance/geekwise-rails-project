@@ -15,11 +15,11 @@ class Link < ActiveRecord::Base
   before_save :default_score
 
   def update_score
-    s =(self.upvotes.size - self.downvotes.size)
+    s = (self.upvotes.size - self.downvotes.size)
     sign = s <=> 0  
     order = Math.log10([0, s.abs].max)
     seconds = created_at.to_i - 1134028003
-    score = order + sign * seconds/45000
+    score = order + sign * seconds/45000.0
     self.update_attributes(:score => score)
   end
 
