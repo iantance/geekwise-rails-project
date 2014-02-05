@@ -11,15 +11,22 @@ class Comment < ActiveRecord::Base
 
   before_save :default_score
 
+  @@score_results = {}
+
   def update_score
-    return 0 unless ups + downs > 0
-    z = 1.6
-    phat = ups/sample
-    score = Math.sqrt(phat+z*z/(2*sample)-z*((phat*(1-phat)+z*z/(4*sample))/sample))/(1+z*z/sample)
-    self.update_attributes(:score => score)
+    self.update_attributes(:score => confidence_score(ups, downs))
   end
 
 private
+
+  def confidence_score(ups, downs)
+    return @@score_results[[ups, downs]] unless @@score_results[[ups, downs]].nil?
+    return 0 unless ups + downs > 0
+    z = 1.6
+    phat = ups/sample
+    @@score_results[[ups, downs]] = Math.sqrt(phat+z*z/(2*sample)-z*((phat*(1-phat)+z*z/(4*sample))/sample))/(1+z*z/sample)
+  end
+
   def default_score
     self.score = self.score || 0
   end
