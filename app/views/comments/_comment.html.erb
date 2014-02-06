@@ -5,7 +5,12 @@
     <span class="down"><%= comment.downvotes.size %> downs</span>
   <span class = "comment-details">
     | submitted by <%= link_to comment.user.name, profile_path(comment.user.name) %> <%= time_ago_in_words comment.created_at %> ago | 
-    <%= link_to "#{comment.children.count} replies", comment_path(comment.id)%>
+    <%= link_to "#{comment.children.count} replies", comment_path(comment.id)%> | 
+    <% if comment.parent_id %>
+    <%= link_to "parent", comment_path(comment.parent_id) %>
+    <% else %>
+    <%= link_to "parent", link_path(comment.link) %>
+    <% end %>
   </span>
   <div class = "comment-main">
     <%= comment.text %>
