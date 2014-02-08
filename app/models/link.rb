@@ -1,6 +1,7 @@
 require 'acts_as_votable'
 
 class Link < ActiveRecord::Base
+  paginates_per 25
   acts_as_votable
   belongs_to :user
   has_many :comments

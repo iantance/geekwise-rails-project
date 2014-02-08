@@ -1,5 +1,8 @@
 Geekwisenews::Application.routes.draw do
   resources :links do
+
+    get 'page/:page', :action => :index, :on => :collection
+    
     member do
       post 'upvote'
       post 'downvote'

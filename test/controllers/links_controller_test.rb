@@ -27,7 +27,7 @@ class LinksControllerTest < ActionController::TestCase
 
   context "GET #index" do
     setup do
-      get :index
+      get :index, :page => "1"
     end
 
     should respond_with(200)

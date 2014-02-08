@@ -9,11 +9,11 @@ class LinksController < ApplicationController
   end
 
   def index
-    @links = Link.all.order("score DESC")
+    @links = Link.all.order("score DESC").page params[:page]
   end
 
   def newest
-    @links = Link.all.order("created_at DESC")
+    @links = Link.all.order("created_at DESC").page params[:page]
     render "index"
   end
   
