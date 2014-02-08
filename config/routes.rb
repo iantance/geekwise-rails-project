@@ -2,21 +2,25 @@ Geekwisenews::Application.routes.draw do
   resources :links do
 
     get 'page/:page', :action => :index, :on => :collection
-    
+
     member do
       post 'upvote'
       post 'downvote'
     end
+
     collection do
       get 'newest'
     end
+
   end
+
   resources :comments do
     member do
       post 'upvote'
       post 'downvote'
     end
   end
+  
   resource :user
   resource :session, :only => [:new, :create, :destroy]
 

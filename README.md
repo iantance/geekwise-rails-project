@@ -14,4 +14,6 @@ Voting made possible by acts_as_votable gem: https://github.com/ryanto/acts_as_v
 
 Nested comments made possible by ancestry gem: https://github.com/stefankroes/ancestry
 
+Pagination with kaminari gem: https://github.com/amatsuda/kaminari
+
 
