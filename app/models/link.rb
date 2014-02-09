@@ -5,12 +5,14 @@ class Link < ActiveRecord::Base
   acts_as_votable
   belongs_to :user
   has_many :comments
-  
+   has_and_belongs_to_many :tags
+
   URL_REGEX = /\A(http|https):\/\/|[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,6}(:[0-9]{1,5})?(\/.*)?\z/
   validates :link_url, :format => URL_REGEX
 
 
   attr_accessor :link_domain
+  attr_accessor :tag_list
 
   before_save :provide_title
   before_save :default_score
