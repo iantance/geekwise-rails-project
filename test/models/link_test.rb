@@ -21,14 +21,14 @@ class LinkTest < ActiveSupport::TestCase
 context "before save" do
   context "create tags from tag list" do
     setup do
-      @user = Fabricate.build(:user, :tag_list => "one")
+      @user = Fabricate.build(:link, :tag_list => "one two")
     end
     context "tag already exits" do
       setup do
         @tag = Fabricate(:tag, :tag => "one")
       end
       should "add tag to user without creating new tag instance" do
-        assert_no_difference "Tag.count" do
+        assert_difference "Tag.count", 1 do
           @user.save
           assert @user.tags.any?
         end
@@ -36,7 +36,7 @@ context "before save" do
     end
     context "new tag" do
       should "create tag and add to user" do
-        assert_difference "Tag.count" do
+        assert_difference "Tag.count", 2 do
           @user.save
           assert @user.tags.any?
         end
