@@ -47,7 +47,8 @@ class LinksControllerTest < ActionController::TestCase
     should "assign value to links" do
       assert_not_nil :links
     end
-  end  
+  end
+
 
   context "GET #new" do
     context "if user logged in" do

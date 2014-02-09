@@ -1,7 +1,7 @@
 Geekwisenews::Application.routes.draw do
   resources :links do
 
-    get 'page/:page', :action => :index, :on => :collection
+    get "page/:page", :action => :index, :on => :collection
 
     member do
       post 'upvote'
@@ -20,10 +20,12 @@ Geekwisenews::Application.routes.draw do
       post 'downvote'
     end
   end
-  
+
   resource :user
   resource :session, :only => [:new, :create, :destroy]
+  resource :tag, :only => [:show]
 
+  get "tag/:tag" => "tags#show"
   get ":name" => "users#show", :as => "profile"
   get ":name/comments" => "users#comments", :as => "user_comments"
   # The priority is based upon order of creation: first created -> highest priority.

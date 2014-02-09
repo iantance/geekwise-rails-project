@@ -32,12 +32,12 @@ private
   def create_tags
     return unless tag_list
     tag_list.split(%r{,\s*|\s+}).each do |tag|
-      if new_tag = Tag.find_by(:tag => tag)
-        add_tag = new_tag
+      if old_tag = Tag.find_by(:tag => tag)
+        add_tag = old_tag
       else
         add_tag = Tag.create(:tag => tag)
       end
-      self.tags << add_tag unless self.tags.include? add_tag
+      self.tags << add_tag 
     end
   end
 

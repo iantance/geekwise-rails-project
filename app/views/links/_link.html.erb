@@ -4,7 +4,7 @@
 <span class="domain">(<%= link_domain(link) %>)</span>
 <p class="tags">
   <% link.tags.each do |t| %>
-    <a href = "#"><%= t.tag %></a>
+    <%= link_to t.tag, tag_path(:tag => t.tag) %>
   <% end %>
 </p>
 <p class="link-details">
