@@ -5,7 +5,7 @@ class Link < ActiveRecord::Base
   acts_as_votable
   belongs_to :user
   has_many :comments
-  has_and_belongs_to_many :tags
+  has_and_belongs_to_many :tags, -> { uniq }
 
   URL_REGEX = /\A(http|https):\/\/|[a-z0-9]+([\-\.]{1}[a-z0-9]+)*\.[a-z]{2,6}(:[0-9]{1,5})?(\/.*)?\z/
   validates :link_url, :format => URL_REGEX
@@ -16,7 +16,7 @@ class Link < ActiveRecord::Base
 
   before_save :provide_title
   before_save :default_score
-  before_save :create_links, :if => :tags_update?
+  before_save :create_tags, :if => :tags_update?
 
   def update_score
     s = (self.upvotes.size - self.downvotes.size)
@@ -29,7 +29,7 @@ class Link < ActiveRecord::Base
 
 private
 
-  def create_links
+  def create_tags
     return unless tag_list
     tag_list.split(%r{,\s*|\s+}).each do |tag|
       if new_tag = Tag.find_by(:tag => tag)
@@ -37,12 +37,12 @@ private
       else
         add_tag = Tag.create(:tag => tag)
       end
-      self.tags << add_tag
+      self.tags << add_tag unless self.tags.include? add_tag
     end
   end
 
   def tags_update?
-    tag_list.present? || new_record?
+    new_record?
   end
 
   def default_score

@@ -29,13 +29,19 @@ form {
     vertical-align: middle;
   }
 
-   input {
+  &.tags label {
+    position: relative;
+    top: -20px;
+  }
+
+   input, textarea {
     width: 40%;
     margin-left: 10px;
     height: 30px;
     border-radius: 5px;
     border: 1px solid;
   }
+
   .field_with_errors{
     display: inline;
 
@@ -46,6 +52,10 @@ form {
     input {
       border: 1px solid red;
     }
+  }
+
+  textarea {
+    height: 50px;
   }
 
 }

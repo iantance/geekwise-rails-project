@@ -10,6 +10,10 @@
       <%= f.label :link_url, "URL" %>
       <%= f.text_field :link_url %>
     </div>
+    <div class="form-group tags">
+      <%= f.label :tag_list, "Tags" %>
+      <%= f.text_area :tag_list, :rows => "3" %>
+    </div>
     <%= f.submit "Submit Link"%>
   <% end %>
 </div>

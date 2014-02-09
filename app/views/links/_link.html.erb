@@ -2,6 +2,11 @@
 <%= link_to image_tag("glyphicons_212_down_arrow.png", :alt => "downvote", :class=> "vote"), downvote_link_path(link.id), :method => :post %>
 <%= link_to("#{link.title}", link.link_url) %>
 <span class="domain">(<%= link_domain(link) %>)</span>
+<p class="tags">
+  <% link.tags.each do |t| %>
+    <a href = "#"><%= t.tag %></a>
+  <% end %>
+</p>
 <p class="link-details">
   <span class="up"><%= link.upvotes.size %> ups</span>
   <span class="down"><%= link.downvotes.size %> downs</span>

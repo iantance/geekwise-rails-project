@@ -30,7 +30,7 @@ context "before save" do
       should "add tag to user without creating new tag instance" do
         assert_difference "Tag.count", 1 do
           @user.save
-          assert @user.tags.any?
+          assert_equal 2, @user.tags.count
         end
       end
     end
@@ -38,7 +38,7 @@ context "before save" do
       should "create tag and add to user" do
         assert_difference "Tag.count", 2 do
           @user.save
-          assert @user.tags.any?
+          assert_equal 2, @user.tags.count
         end
       end
     end
