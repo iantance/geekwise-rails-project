@@ -29,6 +29,31 @@ class UserTest < ActiveSupport::TestCase
         assert_equal @salt, @user.password_salt
       end
     end
+
+    context "create tags from tag list" do
+      setup do
+        @user = Fabricate.build(:user, :tag_list => "one")
+      end
+      context "tag already exits" do
+        setup do
+          @tag = Fabricate(:tag, :tag => "one")
+        end
+        should "add tag to user without creating new tag instance" do
+          assert_no_difference "Tag.count" do
+            @user.save
+            assert @user.tags.any?
+          end
+        end
+      end
+      context "new tag" do
+        should "create tag and add to user" do
+          assert_difference "Tag.count" do
+            @user.save
+            assert @user.tags.any?
+          end
+        end
+      end
+    end
   end
 
   context ".authenticate" do

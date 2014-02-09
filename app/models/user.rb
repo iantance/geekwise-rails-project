@@ -6,6 +6,7 @@ class User < ActiveRecord::Base
   
   has_many :links
   has_many :comments
+  has_and_belongs_to_many :tags
   
   EMAIL_REGEX = /\A[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]+\z/
   validates :name, :uniqueness => true, :length => 1..15
@@ -17,6 +18,8 @@ class User < ActiveRecord::Base
   validates :password_confirmation, :presence => true, :if => :sign_up?
 
   attr_accessor :password
+
+  attr_accessor :tag_list
 
   before_save :encrypt_password
 

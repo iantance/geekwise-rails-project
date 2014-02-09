@@ -6,5 +6,7 @@
      </li>
     <% end %>
   </ol>
+  <% unless @user %>
   <%= paginate links %>
+  <% end %>
 </div>
