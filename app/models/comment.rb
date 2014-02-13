@@ -12,10 +12,14 @@ class Comment < ActiveRecord::Base
 
   before_save :default_score
 
+  @@lock = Mutex.new
+
   @@score_results = {}
 
   def update_score
-    self.update_attributes(:score => confidence_score(ups, downs))
+    @@lock.synchronize do
+      self.update_attributes(:score => confidence_score(ups, downs))
+    end
   end
 
 private
